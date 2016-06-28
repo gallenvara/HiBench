@@ -17,33 +17,11 @@
 
 package com.intel.hibench.streambench.storm.trident;
 
-import backtype.storm.Config;
-import backtype.storm.LocalCluster;
-import backtype.storm.LocalDRPC;
-import backtype.storm.StormSubmitter;
-import backtype.storm.generated.StormTopology;
-import backtype.storm.tuple.Fields;
-import backtype.storm.tuple.Values;
-import backtype.storm.utils.*;
-import backtype.storm.topology.base.BaseRichSpout;
 
-import storm.trident.TridentState;
-import storm.trident.TridentTopology;
-import storm.trident.operation.BaseFunction;
-import storm.trident.operation.TridentCollector;
-import storm.trident.operation.builtin.Count;
-import storm.trident.operation.builtin.FilterNull;
-import storm.trident.operation.builtin.MapGet;
-import storm.trident.operation.builtin.Sum;
-import storm.trident.testing.FixedBatchSpout;
-import storm.trident.testing.MemoryMapState;
-import storm.trident.tuple.TridentTuple;
-import storm.kafka.trident.*;
-
-
-import com.intel.hibench.streambench.storm.util.*;
-import com.intel.hibench.streambench.storm.spout.*;
-import com.intel.hibench.streambench.storm.topologies.*;
+import org.apache.storm.trident.operation.BaseFunction;
+import org.apache.storm.trident.operation.TridentCollector;
+import org.apache.storm.trident.tuple.TridentTuple;
+import org.apache.storm.tuple.Values;
 
 public class Sketch extends BaseFunction {
   private int fieldIndex;
@@ -55,10 +33,10 @@ public class Sketch extends BaseFunction {
   }
 
   @Override
-  public void execute(TridentTuple tuple, TridentCollector collector){
+  public void execute(TridentTuple tuple, TridentCollector collector) {
     String record = tuple.getString(0);
     String[] fields = record.split(separator);
-    if (fields.length > fieldIndex) 
+    if (fields.length > fieldIndex)
       collector.emit(new Values(fields[fieldIndex]));
   }
 }

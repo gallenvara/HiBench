@@ -280,6 +280,18 @@ function run-storm-job(){
     execute_withlog $CMD
 }
 
+function run-gearpump-app(){
+    CMD="${GEARPUMP_HOME}/bin/gear app -executors ${STREAMBENCH_GEARPUMP_EXECUTORS} -jar ${STREAMBENCH_GEARPUMP_JAR} $@"
+    echo -e "${BGreen}Submit Gearpump Application: ${Green}$CMD${Color_Off}"
+    execute_withlog $CMD
+}
+
+function run-flink-job(){
+    CMD="${FLINK_HOME}/bin/flink run $@ ${STREAMBENCH_FLINK_JAR} ${SPARKBENCH_PROPERTIES_FILES} flink"
+    echo -e "${BGreen}Submit Flink Job: ${Green}$CMD${Color_Off}"
+    execute_withlog $CMD
+}
+
 function run-hadoop-job(){
     ENABLE_MONITOR=1
     if [ "$1" = "--without-monitor" ]; then
